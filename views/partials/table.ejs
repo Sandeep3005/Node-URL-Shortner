@@ -1,23 +1,19 @@
 <section>
-
   <table class="table is-bordered is-striped is-fullwidth">
     <thead>
       <tr>
-        <th>Full Url
-          <%- include("filterForm.ejs") %>
-          <% if (sort == -1) {%>
+        <th>
+          Full Url <%- include("filterForm.ejs") %> <%-
+          include("clearFilterForm.ejs") %> <% if (sort == -1) {%>
           <a style="margin-left: 40%" href="/sort/fullUrl/1">&#9660;</a>
           <% } else {%>
           <a style="margin-left: 40%" href="/sort/fullUrl/-1">&#9650;</a>
           <% } %>
         </th>
-        <th>
-          Shortned Url
-        </th>
+        <th>Shortned Url</th>
       </tr>
     </thead>
-    <% records.forEach((rec) => {%>
-    <%- include("tableLine.ejs", {rec}) %>
+    <% records.forEach((rec) => {%> <%- include("tableLine.ejs", {rec}) %>
     <%})%>
   </table>
 </section>

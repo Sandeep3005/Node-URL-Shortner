@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/bulma.min.css" />
+    <title>Welcome to URL Shortner</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel='stylesheet' href='/bulma.min.css' />
-  <title>Welcome to URL Shortner</title>
-</head>
-
-<body>
-  <div class="container">
-    <%- include("partials/hero.ejs") %>
-    <%- include("partials/form.ejs") %>
-    <%- include("partials/table.ejs", {records, sort}) %>
-  </div>
-</body>
-
+  <body>
+    <div class="container">
+      <%- include("partials/hero.ejs") %> <%- include("partials/form.ejs") %>
+      <%- include("partials/table.ejs", {records, sort, filterValue }) %>
+    </div>
+  </body>
 </html>
