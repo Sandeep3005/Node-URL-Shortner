@@ -16,8 +16,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   firestoreOperations.fetchAll().then((snapshot) => {
+    const formatSnapshot = snapshot.docs.map((doc) => {
+      const singleSnap = {
+        fullUrl: doc.data().fullUrl,
+        shortUrl: doc.data().shortUrl,
+      };
+      console.log(singleSnap);
+      return singleSnap;
+    });
+    console.log("-----------");
+    console.log("formatSnapshot", formatSnapshot);
+    console.log("-----------");
     res.send({
-      records: snapshot.docs,
+      data: formatSnapshot,
+      totalRecords: formatSnapshot.length,
     });
     //   res.render("index", {
     // sort: 1,
