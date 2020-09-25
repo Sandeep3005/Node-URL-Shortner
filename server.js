@@ -10,9 +10,7 @@ app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// app.use(express.static(path.join(__dirname, "public")));
-// app.set("view engine", "ejs");
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   firestoreOperations.fetchAll().then((snapshot) => {
@@ -21,31 +19,23 @@ app.get("/", (req, res) => {
         fullUrl: doc.data().fullUrl,
         shortUrl: doc.data().shortUrl,
       };
-      console.log(singleSnap);
       return singleSnap;
     });
-    console.log("-----------");
-    console.log("formatSnapshot", formatSnapshot);
-    console.log("-----------");
     res.send({
       data: formatSnapshot,
       totalRecords: formatSnapshot.length,
     });
-    //   res.render("index", {
-    // sort: 1,
-    // filterValue: null,
-    //   });
   });
 });
 
-app.post("/shortUrl", async (req, res) => {
+app.post("/createShortUrl", async (req, res) => {
   const { fullUrl } = req.body;
   const shortUrl = shortid.generate();
   const newRecord = {
     fullUrl,
     shortUrl,
   };
-  // firestoreOperations.saveRecord(newRecord).then(() => res.redirect("/"));
+  firestoreOperations.saveRecord(newRecord).then(() => res.send(newRecord));
 });
 
 app.post("/filter/", async (req, res) => {
