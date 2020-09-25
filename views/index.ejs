@@ -3,14 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/ag-grid-community.min.noStyle.js"></script>
     <link rel="stylesheet" href="/bulma.min.css" />
+    <link rel="stylesheet" href="/ag-grid.min.css" />
+    <link rel="stylesheet" href="/ag-theme-alpine.css" />
     <title>Welcome to URL Shortner</title>
   </head>
 
   <body>
     <div class="container">
-      <%- include("partials/hero.ejs") %> <%- include("partials/form.ejs") %>
-      <%- include("partials/table.ejs", {records, sort, filterValue }) %>
+      <%- include("partials/hero.ejs") %> <%- include("partials/form.ejs") %> <%
+      if (records.length) {%> <%- include("partials/table.ejs", {records, sort,
+      filterValue }) %> <%} else {%>
+      <div>Current shortUrl count: 0. Please generate a new short url</div>
+      <%}%>
     </div>
   </body>
 </html>

@@ -6,31 +6,32 @@ const firestoreOperations = require("./firestoreOperations");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const allRecords = [];
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, "public")));
-app.set("view engine", "ejs");
+// app.use(express.static(path.join(__dirname, "public")));
+// app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
   firestoreOperations.fetchAll().then((snapshot) => {
-    res.render("index", {
+    res.send({
       records: snapshot.docs,
-      sort: 1,
-      filterValue: null,
     });
+    //   res.render("index", {
+    // sort: 1,
+    // filterValue: null,
+    //   });
   });
 });
 
 app.post("/shortUrl", async (req, res) => {
-  console.log(req.body);
   const { fullUrl } = req.body;
+  const shortUrl = shortid.generate();
   const newRecord = {
     fullUrl,
-    shortUrl: shortid.generate(),
+    shortUrl,
   };
-  firestoreOperations.saveRecord(newRecord).then(() => res.redirect("/"));
+  // firestoreOperations.saveRecord(newRecord).then(() => res.redirect("/"));
 });
 
 app.post("/filter/", async (req, res) => {
@@ -39,16 +40,16 @@ app.post("/filter/", async (req, res) => {
     const filteredRecord = snapshot.docs.filter((rec) =>
       rec.data().fullUrl.includes(filter)
     );
-    res.render("index", {
-      records: filteredRecord,
-      sort: 1,
-      filterValue: filter,
-    });
+    // res.render("index", {
+    //   records: filteredRecord,
+    //   sort: 1,
+    //   filterValue: filter,
+    // });
   });
 });
 
 app.post("/clearFilter/", async (req, res) => {
-  res.redirect("/");
+  // res.redirect("/");
 });
 
 app.get("/sort/:sortField/:order", async (req, res) => {
@@ -59,11 +60,11 @@ app.get("/sort/:sortField/:order", async (req, res) => {
   firestoreOperations
     .fetchOneByOrder(sortField, fetchOrder)
     .then((snapshot) => {
-      res.render("index", {
-        records: snapshot.docs,
-        sort: order,
-        filterValue: null,
-      });
+      // res.render("index", {
+      //   records: snapshot.docs,
+      //   sort: order,
+      //   filterValue: null,
+      // });
     });
 });
 
@@ -73,7 +74,7 @@ app.get("/:shortUrl", async (req, res) => {
   firestoreOperations.fetchOne(shortUrl).then((doc) => {
     const { fullUrl } = doc.data();
     const redirectUrl = `${fullUrl}`;
-    res.redirect(redirectUrl);
+    // res.redirect(redirectUrl);
   });
 });
 
