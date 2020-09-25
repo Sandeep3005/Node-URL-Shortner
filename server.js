@@ -2,9 +2,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const shortid = require("shortid");
+var cors = require("cors");
 const firestoreOperations = require("./firestoreOperations");
 
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
