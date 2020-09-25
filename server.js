@@ -74,11 +74,13 @@ app.get("/sort/:sortField/:order", async (req, res) => {
 
 app.get("/:shortUrl", async (req, res) => {
   const { shortUrl } = req.params;
+  console.log("shortUrl", shortUrl);
   if (shortUrl === "favicon.ico") return res.send("");
   firestoreOperations.fetchOne(shortUrl).then((doc) => {
     const { fullUrl } = doc.data();
-    const redirectUrl = `${fullUrl}`;
-    // res.redirect(redirectUrl);
+    console.log("doc.data()", fullUrl);
+    res.redirect(fullUrl);
+    res.send("Hi");
   });
 });
 
